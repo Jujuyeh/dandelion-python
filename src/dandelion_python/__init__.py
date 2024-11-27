@@ -34,9 +34,11 @@ def configure_loggers(handler: logging.Handler):
         logger.addHandler(handler)
 
 
-
 def main():
-    with RemoteHandler(host=os.getenv("LOGGING_ENDPOINT", "127.0.0.1"), port=int(os.getenv("LOGGING_PORT", "8080"))) as handler:
+    with RemoteHandler(
+        host=os.getenv("LOGGING_ENDPOINT", "127.0.0.1"),
+        port=int(os.getenv("LOGGING_PORT", "8080")),
+    ) as handler:
         configure_loggers(handler)
         start_http_server()
 

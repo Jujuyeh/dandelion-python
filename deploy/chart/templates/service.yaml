@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dandelion.fullname" . }}
+  labels:
+    app: {{ include "dandelion.fullname" . }}
+  annotations:
+    {{- toYaml .Values.annotations.service | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ include "dandelion.fullname" . }}
+  ports:
+  - port: {{ .Values.service.port }}
+    name: http
+    protocol: TCP
+    targetPort: http
+

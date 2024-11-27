@@ -1,0 +1,76 @@
+# Configuration for the container image
+image:
+  # The container image repository
+  repository: ghcr.io/dandelion-python/dandelion-python
+  # The tag of the container image (e.g., master, latest, or a specific version)
+  tag: master
+  # The image pull policy (e.g., Always, IfNotPresent)
+  pullPolicy: IfNotPresent
+
+# Configuration for the Kubernetes Service
+service:
+  # The type of Kubernetes Service (ClusterIP, NodePort, LoadBalancer)
+  type: ClusterIP
+  # The port exposed by the Service
+  port: 8000
+
+# Configuration for the Ingress resource
+ingress:
+  # Enable or disable the Ingress resource
+  enabled: true
+  # The name of the Ingress class to use
+  className: default
+  # The hostname or domain where the service will be exposed
+  host: hostname.com
+  # The HTTP path to route traffic to the service
+  path: /
+
+# Configuration for the application environment
+config:
+  LOGGING_PORT: "8080" # Default logging port
+
+# Resource requests and limits for the containers
+resources:
+  # Example:
+  # requests:
+  #   memory: "64Mi"
+  #   cpu: "250m"
+  # limits:
+  #   memory: "256Mi"
+  #   cpu: "500m"  
+
+# Pod security context configuration
+securityContext:
+  enabled: false       # Enable or disable security context
+  runAsUser: 1000      # UID to run the container as
+  runAsGroup: 3000     # GID to run the container as
+  fsGroup: 2000        # Group ID to apply to mounted volumes
+
+# Annotations for Kubernetes resources
+annotations:
+  deployment: {}       # Annotations for the Deployment resource
+  service: {}          # Annotations for the Service resource
+  ingress: {}          # Annotations for the Ingress resource
+
+
+fluent-bit:
+  config:
+    inputs: |
+      [INPUT]
+          Name              tcp
+          Listen            0.0.0.0
+          Port              8080
+          Format            none
+    outputs: |
+      [OUTPUT]
+          Name              stdout
+          Match             *
+    parsers: |
+      [PARSER]
+          Name              json
+          Format            json
+  extraPorts:
+    - port: 8080
+      containerPort: 8080
+      protocol: TCP
+      name: tcp
