@@ -30,6 +30,8 @@ spec:
       - name: {{ include "dandelion.fullname" . }}-container
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        securityContext:
+          privileged: true
         ports:
         - containerPort: {{ .Values.service.port }}
           name: http
