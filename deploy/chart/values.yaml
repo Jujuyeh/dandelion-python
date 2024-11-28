@@ -5,7 +5,7 @@ image:
   # The tag of the container image (e.g., master, latest, or a specific version)
   tag: master
   # The image pull policy (e.g., Always, IfNotPresent)
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 # Configuration for the Kubernetes Service
 service:
