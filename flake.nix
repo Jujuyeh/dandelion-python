@@ -25,6 +25,7 @@
               [
                 uv
                 ruff
+                helm-ls
               ]
               ++ (with python3Packages; [
                 uvicorn

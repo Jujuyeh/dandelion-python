@@ -20,6 +20,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
+      serviceAccountName: {{ include "dandelion.fullname" . }}
       securityContext:
         {{- if .Values.securityContext.enabled }}
         runAsUser: {{ .Values.securityContext.runAsUser }}
